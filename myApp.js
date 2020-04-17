@@ -2,15 +2,15 @@
 var express = require('express');
 var app = express();
 
-app.get("/json", function(req, res){
-  if(process.env.MESSAGE_STYLE === 'uppercase'){
+app.get("/json", function(req, res) {
+  if(process.env.MESSAGE_STYLE === 'uppercase') {
     res.json({
       "message":"HELLO JSON"
     });
   }
-  res.json({"message":"hello json"
+    res.json({"message":"Hello json"
   });
-});
+  });
 // --> 7)  Mount the Logger middleware here
 
 
