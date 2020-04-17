@@ -37,10 +37,25 @@ var app = express();
 /** 7) Root-level Middleware - A logger */
 //  place it before all the routes !
 
+<<<<<<< HEAD
 app.get('/json', function(req, res, next){
 console.log(`${req.method} ${req.path} - ${req.ip}`);
 next();
 })
+=======
+// app.get('/json', function(req, res, next){
+// console.log(`${req.method} ${req.path} - ${req.ip}`);
+// next();
+// })
+
+/** 8) Chaining middleware. A Time server */
+// app.get('/now', function(req, res, next) {
+//   req.time = new Date().toString()
+//   next();
+// }, function(req, res) {
+//   res.send({time: req.time});
+// })
+>>>>>>> 3df79b6a67b597b188273a958247b124d2a4c5f2
 
 /** 8) Chaining middleware. A Time server */
 app.get('/now', function(req, res, next) {
