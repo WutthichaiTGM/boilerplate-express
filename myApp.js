@@ -24,38 +24,61 @@ var app = express();
 
 
 /** 6) Use the .env file to configure the app */
-//  app.get("/json", function(req, res) {
-//   if(process.env.MESSAGE_STYLE === 'uppercase') {
-//     res.json({
-//       "message": "HELLO JSON"
-//   });
-//   }
-//     res.json({"message": "Hello json"
-//   });
-//   });
+ app.get("/json", function(req, res) {
+  if(process.env.MESSAGE_STYLE === 'uppercase') {
+    res.json({
+      "message": "HELLO JSON"
+  });
+  }
+    res.json({"message": "Hello json"
+  });
+  });
  
 /** 7) Root-level Middleware - A logger */
 //  place it before all the routes !
 
 app.get('/json', function(req, res, next){
-console.log("I'm a middleware...");
+console.log(`${req.method} ${req.path} - ${req.ip}`);
 next();
 })
+
 /** 8) Chaining middleware. A Time server */
-
-
+app.get('/now', function(req, res, next) {
+  req.time = new Date().toString()
+  next();
+}, function(req, res) {
+  res.send({time: req.time});
+})
 /** 9)  Get input from client - Route parameters */
+app.get("/:word/echo",(req,res)=>{
+  const {word} = req.params;
+  res.json({
+    echo :word,
+  });
+});
 
-
-/** 10) Get input from client - Query parameters */
+//** 10) Get input from client - Query parameters */
 // /name?first=<firstname>&last=<lastname>
+// app.get("/name",function(req,res){
+//   var f = req.query.first;
+//   var l = req.query.last;
+//   var {first: f,last: l}=req.query;
+//   res.json({
+//     name:${f} ${l}
+//   })
+// });
 
-  
-/** 11) Get ready for POST Requests - the `body-parser` */
+/** 11) Get ready for POST Requests - the body-parser */
 // place it before all the routes !
-
+var bodyParser = require("body-parser");
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 /** 12) Get data form POST  */
+app.post("/name",function(req,res){
+  var name = req.body.first+" "+req.body.last;
+  res.json({name: name});
+});
 
 
 
